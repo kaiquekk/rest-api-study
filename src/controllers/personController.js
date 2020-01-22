@@ -1,19 +1,20 @@
-let people = {
-    1: {
-        nome: 'aa',
-        idade: 12
-    },
-    2: {
-        nome: 'bb',
-        idade: 13
-    },
-    3: {
-        nome: 'cc',
-        idade: 14
-    }
-};
-
-let ind = 3;
+let people = [
+	{
+		id: 1,
+		name: 'Teste 1',
+        age: 12
+	},
+	{
+		id: 2,
+		name: 'Teste 2',
+		age: 44
+	},
+	{
+		id: 3,
+		name: 'Teste 3',
+		age: 36
+	}
+];
 
 const get = (req, res, next) => {
     res.status(200);
@@ -26,11 +27,15 @@ const getById = (req, res, next) => {
     res.json(people[id]).send();
 };
 
+const getAll = (req, res, next) => {
+	res.status(200);
+	res.render('allPeople', { names: people });
+};
+
 const post = (req, res, next) => {
-	people[ind] = { name: req.body.nameField, idade: req.body.ageField };
-	ind += 1;
+	people.push({ id:people.length+1, name:req.body.nameField, age:req.body.ageField });
     res.status(201);
-    res.render('personCreated', {id: ind-1, name: req.body.nameField, age:req.body.ageField });
+	res.render('personCreated', people[people.length-1]);
 };
 
 const put = (req, res, next) => {
@@ -42,4 +47,4 @@ const del = (req, res, next) => {
     let id = req.params.id;
     res.status(200).send(`Delete id:${id}.`);
 };
-module.exports = { put, post, get, del, getById };
+module.exports = { put, post, get, del, getById, getAll };

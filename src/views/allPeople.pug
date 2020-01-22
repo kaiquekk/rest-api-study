@@ -1,0 +1,26 @@
+doctype html
+head
+	style(type='text/css').
+		body{
+		background-color: gray;
+		}
+		ul{
+			text-align: center;
+			list-style-position: inside;
+		}
+	meta(charset='UTF-8')
+	title All people
+center
+	h1 List of people
+	ul
+		each elem in names
+			li
+				b Id:&nbsp
+				=elem.id
+				| &nbsp----&nbsp
+				b Name:&nbsp
+				=elem.name
+				| &nbsp----&nbsp
+				b Age:&nbsp
+				=elem.age
+				br
