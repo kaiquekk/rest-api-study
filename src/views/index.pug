@@ -1,0 +1,17 @@
+doctype html
+head
+  style(type='text/css').
+    body{
+    background-color: gray;
+    }
+  meta(charset='UTF-8')
+  title=title
+h1=message
+form(action='/people' method='GET')
+  input(type='submit' value='GET all people')
+form(action='/people' method='POST')
+  input(type='submit' value='Create a person')
+form(action='/people' method='PUT')
+  input(type='submit' value='Update a person')
+form(action='/people' method='DELETE')
+  input(type='submit' value='Delete a person')
