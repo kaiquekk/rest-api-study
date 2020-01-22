@@ -23,8 +23,8 @@ const get = (req, res, next) => {
 
 const getById = (req, res, next) => {
     let id = req.params.id;
-    res.status(200)
-    res.json(people[id]).send();
+	res.status(200);
+	res.render('getPerson', { id:id, name:people[id-1].name, age:people[id-1].age });
 };
 
 const getAll = (req, res, next) => {
@@ -39,8 +39,10 @@ const post = (req, res, next) => {
 };
 
 const put = (req, res, next) => {
-    let id = req.params.id;
-    res.status(201).send(`Put id:${id}`);
+	let id = req.params.id;
+	people[id-1] = { name:req.body.nameField, age:req.body.ageField };
+	res.status(200);
+	res.render('updatedPerson', { id:id, name:req.body.nameField, age:req.body.ageField });
 };
 
 const del = (req, res, next) => {

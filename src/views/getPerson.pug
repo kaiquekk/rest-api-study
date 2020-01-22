@@ -1,0 +1,30 @@
+doctype html
+head
+  style(type='text/css').
+    body{
+    background-color: gray;
+    }
+  meta(charset='UTF-8')
+  title Got
+center
+  h1 Person retrieved
+  label Id:
+    label=id
+  br
+  label Name:
+    label=name
+  br
+  label Age:
+    label=age
+  br
+  p
+  form(action=`/people/${id}` method='PUT')
+    label(for='personName')
+      | Name:
+      input#personName(type='text' name='nameField')
+      br
+    label(for='personAge')
+      | Age:
+      input#personAge(type='text' name='ageField')
+      br
+      input(type='submit' value='Update this person')
