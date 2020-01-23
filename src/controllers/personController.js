@@ -40,13 +40,15 @@ const post = (req, res, next) => {
 
 const put = (req, res, next) => {
 	let id = req.params.id;
-	people[id-1] = { name:req.body.nameField, age:req.body.ageField };
+	people[id-1] = { id:id, name:req.body.nameField, age:req.body.ageField };
 	res.status(200);
 	res.render('updatedPerson', { id:id, name:req.body.nameField, age:req.body.ageField });
 };
 
 const del = (req, res, next) => {
-    let id = req.params.id;
-    res.status(200).send(`Delete id:${id}.`);
+	let id = req.params.id;
+	people.splice(id-1, 1);
+	res.status(200);
+	res.render('personDeleted', { id:id });
 };
 module.exports = { put, post, get, del, getById, getAll };

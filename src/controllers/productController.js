@@ -16,10 +16,6 @@ const put = (req, res, next) => {
     res.status(201).send(`Put id:${id}`);
 };
 
-const putById = (req, res, next) => {
-
-};
-
 const del = (req, res, next) => {
     let id = req.params.id;
     res.status(200).send(`Delete id:${id}.`);

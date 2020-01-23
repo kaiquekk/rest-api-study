@@ -18,7 +18,8 @@ center
     label=age
   br
   p
-  form(action=`/people/${id}` method='PUT')
+  form(action=`/people/${id}?_method=PUT` method='POST')
+    input(type='hidden' name='_method' value='PUT')
     label(for='personName')
       | Name:
       input#personName(type='text' name='nameField')
@@ -28,3 +29,7 @@ center
       input#personAge(type='text' name='ageField')
       br
       input(type='submit' value='Update this person')
+  p
+  form(action=`/people/${id}?_method=DELETE` method='POST')
+    input(type='hidden' name='_method' value='DELETE')
+    input(type='submit' value='Delete this person')
