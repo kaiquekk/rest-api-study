@@ -30,4 +30,33 @@ describe("People", () =>{
 			});
 		});
 	});
+	describe("POST /", () => {
+		it("should post a person", done => {
+			chai.request(app).post('/people').end((err, res) => {
+				res.should.have.status(201);
+				res.body.should.be.a('object');
+				done();
+			});
+		});
+	});
+	describe("PUT /", () => {
+		it("should update a person", done => {
+			const id = 1;
+			chai.request(app).put(`/people/${id}`).end((err, res) => {
+				res.should.have.status(200);
+				res.body.should.be.a('object');
+				done();
+			});
+		});
+	});
+	describe("DELETE /", () => {
+		it("should delete a person", done => {
+			const id = 3;
+			chai.request(app).delete(`/people/${id}`).end((err, res) => {
+				res.should.have.status(200);
+				res.body.should.be.a('object');
+				done();
+			});
+		});
+	});
 });
