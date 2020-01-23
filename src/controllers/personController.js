@@ -22,9 +22,15 @@ const get = (req, res, next) => {
 };
 
 const getById = (req, res, next) => {
-    let id = req.params.id;
-	res.status(200);
-	res.render('getPerson', { id:id, name:people[id-1].name, age:people[id-1].age });
+	let id = req.params.id;
+	if(id <=0 || id > people.length){
+		res.status(404);
+		res.end();
+	}
+	else{
+		res.status(200);
+		res.render('getPerson', { id:id, name:people[id-1].name, age:people[id-1].age });
+	}
 };
 
 const getAll = (req, res, next) => {
