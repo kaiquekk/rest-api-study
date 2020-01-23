@@ -32,9 +32,17 @@ describe("People", () =>{
 	});
 	describe("POST /", () => {
 		it("should post a person", done => {
-			chai.request(app).post('/people').end((err, res) => {
+			chai.request(app).post('/people').send({ nameField:'a', ageField:2 })
+			.end((err, res) => {
 				res.should.have.status(201);
 				res.body.should.be.a('object');
+				done();
+			});
+		});
+		it("should not post a person", done => {
+			chai.request(app).post('/people').send({ nameField:"" })
+			.end((err, res) => {
+				res.should.have.status(400);
 				done();
 			});
 		});
@@ -48,6 +56,13 @@ describe("People", () =>{
 				done();
 			});
 		});
+		it("should not update a person", done => {
+			const id = 333;
+			chai.request(app).put(`/people/${id}`).end((err, res) => {
+				res.should.have.status(404);
+				done();
+			});
+		});
 	});
 	describe("DELETE /", () => {
 		it("should delete a person", done => {
@@ -55,6 +70,13 @@ describe("People", () =>{
 			chai.request(app).delete(`/people/${id}`).end((err, res) => {
 				res.should.have.status(200);
 				res.body.should.be.a('object');
+				done();
+			});
+		});
+		it("should not delete a person", done => {
+			const id = 333;
+			chai.request(app).delete(`/people/${id}`).end((err, res) => {
+				res.should.have.status(404);
 				done();
 			});
 		});
