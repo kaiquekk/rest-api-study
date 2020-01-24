@@ -1,29 +1,34 @@
 let people = [
 	{
 		id: 1,
-		name: 'Teste 1',
+		name: 'Nome 1',
         age: 12
 	},
 	{
 		id: 2,
-		name: 'Teste 2',
+		name: 'Nome 2',
 		age: 44
 	},
 	{
 		id: 3,
-		name: 'Teste 3',
+		name: 'Nome 3',
 		age: 36
+	},
+	{
+		id: 4,
+		name: 'Nome ',
+		age: 25
 	}
 ];
 
 const get = (req, res, next) => {
     res.status(200);
-    res.render('newPerson');
+	res.render('listPeople', { data: people });
 };
 
 const getById = (req, res, next) => {
 	let id = req.params.id;
-	if(id <=0 || id > people.length){
+	if(id <=0 || id > people.length || !id){
 		res.status(404);
 		res.end('Invalid id.');
 	}
@@ -39,7 +44,7 @@ const getAll = (req, res, next) => {
 };
 
 const post = (req, res) => {
-	if(req.body.nameField === "" || req.body.ageField === ""){
+	if(!req.body.nameField || !req.body.ageField){
 		res.status(400);
 		res.send(`Fields can't be empty.`);
 	}

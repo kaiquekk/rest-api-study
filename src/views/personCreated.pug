@@ -14,8 +14,10 @@ center
   br
   label(for='personName')
     | Name:
-    label=name   
+    label=name
   br
   label(for='personAge')
     | Age:
     label=age
+  form(action='/' method='GET')
+    input(type='submit' value='Return')

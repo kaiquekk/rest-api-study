@@ -33,3 +33,5 @@ center
   form(action=`/people/${id}?_method=DELETE` method='POST')
     input(type='hidden' name='_method' value='DELETE')
     input(type='submit' value='Delete this person')
+  form(action='/' method='GET')
+    input(type='submit' value='Return')
