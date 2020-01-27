@@ -8,6 +8,29 @@ head
   style
     include ../../node_modules/bootstrap/dist/css/bootstrap.min.css
     include ../../public/css/listPeople.css
+  script.
+    const openForm = (name, age, id) => {
+      document.getElementById("putForm").style.display = "block";
+      document.getElementById("pageContent").style.opacity = 0.5;
+      document.getElementById("formContainer").action = `/people/${id}?_method=PUT`;
+      document.getElementById("nameInpt").value = name;
+      document.getElementById("ageInpt").value = age;
+    }
+  script.
+    const closeForm = () => {
+    document.getElementById("putForm").style.display = "none"
+    document.getElementById("pageContent").style.opacity = 1;
+    }
+  script.
+    const openPostForm = () => {
+      document.getElementById("postForm").style.display = "block";
+      document.getElementById("pageContent").style.opacity = 0.5;
+    }
+  script.
+    const closePostForm = () => {
+      document.getElementById("postForm").style.display = "none";
+      document.getElementById("pageContent").style.opacity = 1;
+    }
 // Navigation
 nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.fixed-top
   .container
@@ -24,7 +47,7 @@ nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.fixed-top
         li.nav-item
           a.nav-link(href='/products') Products
 // Page Content
-.container
+.container#pageContent
   .row
     .col-lg-12
       img#mainImage.d-block.img-fluid(src='http://placehold.it/1200x300')
@@ -45,13 +68,46 @@ nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.fixed-top
                   | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!
               .card-footer
                 .card-buttons#cardBtns
-                  form#updBtn(action=`/people/${person.id}?_method=PUT` method='POST')
-                    input(type='hidden' name='_method' value='PUT')
-                    input#btn(type='submit' value='Update Person')
+                  form#updBtn
+                    input(type='button' value='Update Person' onClick=`openForm('${person.name}', '${person.age}', ${person.id})`)
                   | &nbsp&nbsp&nbsp
                   form#delBtn(action=`/people/${person.id}?_method=DELETE` method='POST')
                     input(type='hidden' name='_method' value='DELETE')
                     input#btn(type='submit' value='Delete Person')
+      .col-lg-12
+        center
+          input(type='button' value='Add a New Person' onClick='openPostForm()')
+          p
+.formPopup#putForm
+  form#formContainer(method='POST')
+    center
+      h1 Update Person
+      label(for="name")
+      b Name:
+      input#nameInpt(type="text" name="name")
+      br
+      label(for="age")
+      b Age:
+      input#ageInpt(type="text" name="age")
+      br
+      input(type='hidden' name='_method' value='PUT')
+      input(type="submit" value="Update")
+      input(type='reset' value='Cancel' onClick='closeForm()')
+.formPopup#postForm
+  form#formContainer(action='/people/' method='POST')
+    center
+      h1 Add New Person
+      label(for="name")
+      b Name:
+      input#nameInpt(type="text" placeholder="Name" name="name")
+      br
+      label(for="age")
+      b Age:
+      input#ageInpt(type="text" placeholder="Age" name="age")
+      br
+      input(type="submit" value="Create")
+      input(type='reset' value='Cancel' onClick='closePostForm()')
+
       // /.row
     // /.col-lg-9
   // /.row

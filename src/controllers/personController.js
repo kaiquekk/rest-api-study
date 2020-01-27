@@ -2,7 +2,7 @@ let people = [
 	{
 		id: 1,
 		name: 'Nome 1',
-        age: 12
+    age: 12
 	},
 	{
 		id: 2,
@@ -22,7 +22,7 @@ let people = [
 ];
 
 const get = (req, res, next) => {
-    res.status(200);
+  res.status(200);
 	res.render('listPeople', { data: people });
 };
 
@@ -30,7 +30,7 @@ const getById = (req, res, next) => {
 	let id = req.params.id;
 	if(id <=0 || id > people.length || !id){
 		res.status(404);
-		res.end('Invalid id.');
+		res.send('Invalid id.');
 	}
 	else{
 		res.status(200);
@@ -38,20 +38,15 @@ const getById = (req, res, next) => {
 	}
 };
 
-const getAll = (req, res, next) => {
-	res.status(200);
-	res.render('allPeople', { names: people });
-};
-
 const post = (req, res) => {
-	if(!req.body.nameField || !req.body.ageField){
+	if(!req.body.name || !req.body.age){
 		res.status(400);
 		res.send(`Fields can't be empty.`);
 	}
 	else{
-		people.push({ id:people.length+1, name:req.body.nameField, age:req.body.ageField });
+		people.push({ id:people.length+1, name:req.body.name, age:req.body.age });
 		res.status(201);
-		res.render('personCreated', people[people.length-1]);
+		res.render('listPeople', { data:people });
 	}
 };
 
@@ -62,9 +57,9 @@ const put = (req, res, next) => {
 		res.end('Invalid id.');
 	}
 	else{
-		people[id-1] = { id:id, name:req.body.nameField, age:req.body.ageField };
-		res.status(200);
-		res.render('updatedPerson', { id:id, name:req.body.nameField, age:req.body.ageField });
+		people[id-1] = { id:id, name:req.body.name, age:req.body.age };
+    res.status(200);
+    res.render('listPeople', { data: people });
 	}
 };
 
@@ -77,7 +72,8 @@ const del = (req, res, next) => {
 	else{
 		people.splice(id-1, 1);
 		res.status(200);
-		res.render('personDeleted', { id:id });
+		res.render('listPeople', { data:people });
 	}
 };
-module.exports = { put, post, get, del, getById, getAll };
+
+module.exports = { put, post, get, del, getById };

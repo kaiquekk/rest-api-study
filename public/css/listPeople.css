@@ -32,3 +32,17 @@ input {
   margin: auto;
   float: right;
 }
+
+.formPopup {
+  border-width: 1px;
+  border-color: black;
+  border-style: dashed;
+  width:20%;
+  display: none;
+  position: fixed;
+  top:50%;
+  left:40%;
+  z-index: 9;
+  background-color: white;
+  padding-bottom: 5px;
+}
