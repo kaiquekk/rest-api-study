@@ -11,11 +11,11 @@
     "url": "https://github.com/kaiquekk/rest-api-study"
   },
   "scripts": {
-    "open:src": "nodemon ./bin/server.js",
+    "open:src": "node ./bin/server.js",
     "test": "mocha './test/*.spec.js'",
     "prestart": "babel-node ./bin/server.js",
-    "start": "npm-run-all --parallel open:src lint:watch",
-    "lint": "esw src bin --color",
+    "start": "npm-run-all -p lint:watch open:src",
+    "lint": "esw src bin test --color",
     "lint:watch": "npm run lint -- --watch"
   },
   "author": "Kaique",

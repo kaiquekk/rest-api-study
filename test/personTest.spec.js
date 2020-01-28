@@ -1,15 +1,15 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const app = require('../src/app');
-
+console.log();
 chai.use(chaiHttp);
 chai.should();
-
 describe("People", () =>{
 	describe("GET /", () => {
 		it("should get all students records", done => {
 			chai.request(app).get('/people').end((err, res) => {
-				res.should.have.status(200);
+        res.should.have.status(200);
+
 				res.body.should.be.a('object');
 				done();
 			});
@@ -17,7 +17,7 @@ describe("People", () =>{
 		it("should get a person record", done => {
 			const id = 1;
 			chai.request(app).get(`/people/${id}`).end((err, res) => {
-				res.should.have.status(200);
+        res.should.have.status(200);
 				res.body.should.be.a('object');
 				done();
 			});
@@ -45,7 +45,14 @@ describe("People", () =>{
 				res.should.have.status(400);
 				done();
 			});
-		});
+    });
+    it("should not post a person", done =>{
+      chai.request(app).post('/people').send({ age:"" })
+      .end((err, res) =>{
+        res.should.have.status(400);
+        done();
+      });
+    });
 	});
 	describe("PUT /", () => {
 		it("should update a person", done => {

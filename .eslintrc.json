@@ -16,6 +16,9 @@
 	},
 	"rules": {
 		"no-console": 1,
-		"no-unused-vars": 1
+    "no-unused-vars": 1,
+    "no-irregular-whitespace": 1,
+    "camelcase": 2,
+    "no-trailing-spaces": 1
 	}
 }
