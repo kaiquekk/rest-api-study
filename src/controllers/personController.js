@@ -21,20 +21,20 @@ let people = [
 	}
 ];
 
-const get = (req, res, next) => {
+const get = (req, res) => {
   res.status(200);
 	res.render('listPeople', { data: people });
 };
 
-const getById = (req, res, next) => {
+const getById = (req, res) => {
 	let id = req.params.id;
 	if(id <=0 || id > people.length || !id){
 		res.status(404);
 		res.send('Invalid id.');
 	}
 	else{
-		res.status(200);
-		res.render('getPerson', { id:id, name:people[id-1].name, age:people[id-1].age });
+    res.status(200);
+		res.render('listPeople', { data:people });
 	}
 };
 
@@ -50,7 +50,7 @@ const post = (req, res) => {
 	}
 };
 
-const put = (req, res, next) => {
+const put = (req, res) => {
 	let id = req.params.id;
 	if(id <=0 || id > people.length){
 		res.status(404);
@@ -63,7 +63,7 @@ const put = (req, res, next) => {
 	}
 };
 
-const del = (req, res, next) => {
+const del = (req, res) => {
 	let id = req.params.id;
 	if(id <=0 || id > people.length){
 		res.status(404);

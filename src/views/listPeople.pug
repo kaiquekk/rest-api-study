@@ -9,15 +9,15 @@ head
     include ../../node_modules/bootstrap/dist/css/bootstrap.min.css
     include ../../public/css/listPeople.css
   script.
-    const openForm = (name, age, id) => {
+    const openPutForm = (name, age, id) => {
       document.getElementById("putForm").style.display = "block";
       document.getElementById("pageContent").style.opacity = 0.5;
-      document.getElementById("formContainer").action = `/people/${id}?_method=PUT`;
+      document.getElementById("putFormContainer").action = `/people/${id}?_method=PUT`;
       document.getElementById("nameInpt").value = name;
       document.getElementById("ageInpt").value = age;
     }
   script.
-    const closeForm = () => {
+    const closePutForm = () => {
     document.getElementById("putForm").style.display = "none"
     document.getElementById("pageContent").style.opacity = 1;
     }
@@ -29,6 +29,19 @@ head
   script.
     const closePostForm = () => {
       document.getElementById("postForm").style.display = "none";
+      document.getElementById("pageContent").style.opacity = 1;
+    }
+  script.
+    const openGetForm = (name, age, id) => {
+      document.getElementById("getForm").style.display = "block";
+      document.getElementById("pageContent").style.opacity = 0.5;
+      document.getElementById("getFormContainer").action = `/people/${id}`;
+      document.getElementById("nameGot").innerHTML = name;
+      document.getElementById("ageGot").innerHTML = age;
+    }
+  script.
+    const closeGetForm = () => {
+      document.getElementById("getForm").style.display = "none";
       document.getElementById("pageContent").style.opacity = 1;
     }
 // Navigation
@@ -44,8 +57,6 @@ nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.fixed-top
         li.nav-item.active
           a.nav-link(href='/people') People
             span.sr-only (current)
-        li.nav-item
-          a.nav-link(href='/products') Products
 // Page Content
 .container#pageContent
   .row
@@ -56,7 +67,7 @@ nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.fixed-top
         each person in data
           .col-lg-4.col-md-6.mb-4
             .card.h-100
-              a(href=`/people/${person.id}`)
+              a(href="javascript:void(0);" onclick=`openGetForm('${person.name}', '${person.age}', ${person.id})`)
                 img.card-img-top(src='http://placehold.it/700x400' alt='')
               .card-body
                 h4.card-title
@@ -69,7 +80,7 @@ nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.fixed-top
               .card-footer
                 .card-buttons#cardBtns
                   form#updBtn
-                    input(type='button' value='Update Person' onClick=`openForm('${person.name}', '${person.age}', ${person.id})`)
+                    input(type='button' value='Update Person' onClick=`openPutForm('${person.name}', '${person.age}', ${person.id})`)
                   | &nbsp&nbsp&nbsp
                   form#delBtn(action=`/people/${person.id}?_method=DELETE` method='POST')
                     input(type='hidden' name='_method' value='DELETE')
@@ -79,24 +90,24 @@ nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.fixed-top
           input(type='button' value='Add a New Person' onClick='openPostForm()')
           p
 .formPopup#putForm
-  form#formContainer(method='POST')
+  form#putFormContainer(method='POST')
     center
       h1 Update Person
       label(for="name")
       b Name:
-      input#nameInpt(type="text" name="name")
+      input#nameInpt(type="text" placeholder="Name" name="name")
       br
       label(for="age")
       b Age:
-      input#ageInpt(type="text" name="age")
+      input#ageInpt(type="text" placeholder="Age" name="age")
       br
       input(type='hidden' name='_method' value='PUT')
       input(type="submit" value="Update")
-      input(type='reset' value='Cancel' onClick='closeForm()')
+      input(type='reset' value='Cancel' onClick='closePutForm()')
 .formPopup#postForm
-  form#formContainer(action='/people/' method='POST')
+  form#postFormContainer(action='/people/' method='POST')
     center
-      h1 Add New Person
+      h1 Add Person
       label(for="name")
       b Name:
       input#nameInpt(type="text" placeholder="Name" name="name")
@@ -107,6 +118,19 @@ nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.fixed-top
       br
       input(type="submit" value="Create")
       input(type='reset' value='Cancel' onClick='closePostForm()')
+.formPopup#getForm
+  form#getFormContainer(method='GET')
+    center
+      h1 Person Info
+      label
+      b Name:
+      label#nameGot
+      br
+      label
+      b Age:
+      label#ageGot
+      br
+      input(type="reset" value="Return" onClick='closeGetForm()')
 
       // /.row
     // /.col-lg-9

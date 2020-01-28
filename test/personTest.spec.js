@@ -8,7 +8,7 @@ chai.should();
 describe("People", () =>{
 	describe("GET /", () => {
 		it("should get all students records", done => {
-			chai.request(app).get('/people/all').end((err, res) => {
+			chai.request(app).get('/people').end((err, res) => {
 				res.should.have.status(200);
 				res.body.should.be.a('object');
 				done();
@@ -32,7 +32,7 @@ describe("People", () =>{
 	});
 	describe("POST /", () => {
 		it("should post a person", done => {
-			chai.request(app).post('/people').send({ nameField:'a', ageField:2 })
+			chai.request(app).post('/people').send({ name:'a', age:2 })
 			.end((err, res) => {
 				res.should.have.status(201);
 				res.body.should.be.a('object');
@@ -40,7 +40,7 @@ describe("People", () =>{
 			});
 		});
 		it("should not post a person", done => {
-			chai.request(app).post('/people').send({ nameField:"" })
+			chai.request(app).post('/people').send({ name:"" })
 			.end((err, res) => {
 				res.should.have.status(400);
 				done();
