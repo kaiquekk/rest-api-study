@@ -55,7 +55,11 @@ const put = (req, res) => {
 	if(id <=0 || id > people.length){
 		res.status(404);
 		res.end('Invalid id.');
-	}
+  }
+  else if(!req.body.name || !req.body.age){
+    res.status(400);
+    res.send(`Fields can't be empty.`);
+  }
 	else{
 		people[id-1] = { id:id, name:req.body.name, age:req.body.age };
     res.status(200);
