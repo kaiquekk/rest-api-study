@@ -1,7 +1,7 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const app = require('../src/app');
-console.log();
+
 chai.use(chaiHttp);
 chai.should();
 describe("People", () =>{
@@ -106,7 +106,8 @@ describe("People", () =>{
 		it("should not delete a person", done => {
 			const id = 333;
 			chai.request(app).delete(`/people/${id}`).end((err, res) => {
-				res.should.have.status(404);
+        res.should.have.status(404);
+        res.text.should.be.equal("Invalid id.");
 				done();
 			});
 		});
